@@ -28,7 +28,7 @@ class pokemon_home:
         with open(path, "r", encoding="utf8") as f:
             return json.load(f)
 
-    def request_parameters_from_season_info(self, season_number: int, rule: int) -> None:
+    def request_parameters_from_season_info(self, season_number: string, rule: int) -> None:
         """ポケモンHOME APIを叩くのに必要なパラメータを取得する
 
         param:
