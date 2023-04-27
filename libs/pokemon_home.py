@@ -62,7 +62,7 @@ class pokemon_home:
         cids = season_infos.keys()
         for cid in cids:
             season_info = season_infos[cid]
-            if season_info["rule"] != rule:
+            if eval(season_info["rule"]) != rule:
                 continue
             parameters = {
                 "cid": cid,
