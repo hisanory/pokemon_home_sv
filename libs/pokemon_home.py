@@ -35,7 +35,7 @@ class pokemon_home:
             season_number:シーズン番号
             rule:シングルは0。ダブルは1を記入
         """
-        url = "https://api.battle.pokemon-home.com/tt/cbd/competition/rankmatch/list"
+        url = "https://api.battle.pokemon-home.com/tt/cbd/competition/internet/list"
         header = {}
         data = {"soft": "Sc"}
         res = requests.post(url, headers=header, json=data)
