@@ -28,7 +28,7 @@ class pokemon_home:
         with open(path, "r", encoding="utf8") as f:
             return json.load(f)
 
-    def request_parameters_from_season_info(self, season_number: string, rule: int) -> None:
+    def request_parameters_from_season_info(self, season_number: str, rule: int) -> None:
         """ポケモンHOME APIを叩くのに必要なパラメータを取得する
 
         param:
@@ -42,7 +42,7 @@ class pokemon_home:
         response_json = json.loads(res.text)
         self.params = self._fetch_requirement_parameter(season_number, rule, response_json)
 
-    def _fetch_requirement_parameter(self, season_number: string, rule: int, response: dict):
+    def _fetch_requirement_parameter(self, season_number: str, rule: int, response: dict):
         """jsonからリクエストに必要なパラメータを取得する
 
         param:
@@ -62,7 +62,7 @@ class pokemon_home:
         cids = season_infos.keys()
         for cid in cids:
             season_info = season_infos[cid]
-            if eval(season_info["rule"]) != rule:
+            if season_info["rule"] != rule:
                 continue
             parameters = {
                 "cid": cid,
