@@ -40,42 +40,14 @@ class pokemon_home:
         data = {"soft": "Sc"}
         res = requests.post(url, headers=header, json=data)
         response_json = json.loads(res.text)
-        self.params = self._fetch_requirement_parameter(season_number, rule, response_json)
-
-    def _fetch_requirement_parameter(self, season_number: str, rule: int, response: dict):
-        """jsonからリクエストに必要なパラメータを取得する
-
-        param:
-            response:ランクバトルの情報リストのdictデータ
-            season_number:シーズン番号
-            rule:シングルは0。ダブルは1を記入
-        return:
-            dict型で以下を返す。
-            cid:大会ID
-            rst:現在のシーズンかどうかの判定。
-            ts1:ユーザ情報を取得する際に使用するtimestamp
-            ts2:ポケモン情報を取得するときに利用するtimestamp
-        """
-        parameters = {}
-        season_infos = {}
-        season_infos = response["list"][str(season_number)]
-        cids = season_infos.keys()
-        for cid in cids:
-            season_info = season_infos[cid]
-            if season_info["rule"] != rule:
-                continue
-            parameters = {
-                "cid": cid,
-                "rst": season_info["rst"],
-                "ts1": season_info["ts1"],
-                "ts2": season_info["ts2"],
-            }
-        return parameters
+        self.params = {"cid":str(season_number),"rst": response_json["list"][str(season_number)]["rst"],"ts1": response_json["list"][str(season_number)]["ts1"],"ts2":response_json["list"][str(season_number)]["ts2"]}
 
     def __fetch_pokemon_ranking(self):
         """APIを叩いてポケモンランキングを取得する"""
         url = "https://resource.pokemon-home.com/battledata/ranking/scvi/{cid}/{rst}/{ts}/pokemon"
-        response = requests.get(url.format(cid=self.params["cid"], rst=self.params["rst"], ts=self.params["ts2"]))
+        response = requests.get(
+            url.format(cid=self.params["cid"], rst=self.params["rst"], ts=self.params["ts2"])
+        )
         return json.loads(response.text)
 
     def __fetch_pokemon_detail(self, num: int):
